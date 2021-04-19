@@ -1,13 +1,15 @@
 <?php
 namespace app\controller;
 
+use support\Db;
 use support\Request;
 
 class Index
 {
     public function index(Request $request)
     {
-        return response('hello webman');
+        Db::connection('mongodb')->collection('test')->insert([1,2,3]);
+        return json(Db::connection('mongodb')->collection('test')->get());
     }
 
     public function view(Request $request)
@@ -29,5 +31,5 @@ class Index
         }
         return json(['code' => 1, 'msg' => 'file not found']);
     }
-    
+
 }

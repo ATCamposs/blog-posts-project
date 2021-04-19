@@ -14,9 +14,15 @@
 
 return [
 
-    'default' => 'mysql',
+    'default' => 'mongodb',
 
     'connections' => [
+
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGO_DSN', null),
+            'database' => env('MONGO_DATABASE', null)
+        ],
 
         'mysql' => [
             'driver' => 'mysql',
