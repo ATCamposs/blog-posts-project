@@ -14,5 +14,5 @@
 
 return [
     'debug' => env('APP_DEBUG', false),
-    'default_timezone' => 'Asia/Shanghai',
+    'default_timezone' => 'America/Sao_Paulo',
 ];
