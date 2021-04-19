@@ -44,5 +44,9 @@
     "post-autoload-dump": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ]
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.6",
+    "object-calisthenics/phpcs-calisthenics-rules": "^3.9"
   }
 }
