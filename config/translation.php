@@ -15,11 +15,16 @@
 /**
  * 多语言配置
  */
+if (env('APP_DEBUG', false)) {
+    $locale = 'en_US';
+} else {
+    $locale = 'pt_BR';
+}
 return [
     // 默认语言
-    'locale' => 'zh_CN',
+    'locale' => $locale,
     // 回退语言
-    'fallback_locale' => ['zh_CN', 'en'],
+    'fallback_locale' => ['en_US'],
     // 语言文件存放的文件夹
     'path' => base_path() . '/resource/translations',
 ];
