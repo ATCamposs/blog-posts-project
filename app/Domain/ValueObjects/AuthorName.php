@@ -26,7 +26,7 @@ class AuthorName
         if (strlen($author_name) > 25) {
             throw new InvalidAuthorName(trans('The author name must be less than 26 characters.'));
         }
-        if (!preg_match('/^[A-z]+$/m', $author_name)) {
+        if (!preg_match('/^[A-z0-9]+$/m', $author_name)) {
             throw new InvalidAuthorName(trans('The author name cannot have special characters.'));
         }
         $this->author_name = $author_name;
