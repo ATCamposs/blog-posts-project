@@ -16,7 +16,7 @@ return [
     'Author name updated successfully.' => 'Nome do autor atualizado com sucesso.',
     'Error, there is already a post with this slug.' => 'Erro, já existe um post com este slug.',
     'Post saved successfully.' => 'Post salvo com sucesso.',
-    'The post could not be found' => 'A postagem não pode ser encontrada',
+    'The post could not be found.' => 'A postagem não pode ser encontrada.',
 
     //Generic Error
     'Error, please try again.' => 'Erro, por favor tente novamente.'
