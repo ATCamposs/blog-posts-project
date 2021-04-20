@@ -20,8 +20,8 @@ class Post
     private string $image;
     private string $content;
     private int $views;
-    private DateTime $created;
-    private DateTime $updated;
+    private int $created;
+    private int $updated;
 
     public function __construct(
         string $uuid,
@@ -30,8 +30,8 @@ class Post
         string $image,
         string $content,
         int $views,
-        DateTime $created,
-        DateTime $updated
+        int $created,
+        int $updated
     ) {
         $this->uuid = $uuid;
         $this->author_name = $author_name;
@@ -58,12 +58,13 @@ class Post
             ];
         }
         $now = new DateTime();
+        $now = $now->getTimestamp();
 
         return new Post($uuid, $author_name, $slug, $image, $content, 0, $now, $now);
     }
 
     /** @return Array|Post */
-    public function getPostWithSlug(string $slug)
+    public static function getPostBySlug(string $slug)
     {
         try {
             $slug = new Slug($slug);
@@ -71,13 +72,23 @@ class Post
             return ['status' => 'fail', 'data' => ['slug' => $error->getMessage()]
             ];
         }
-        $post = $this->getRepository()->getPostWithSlug($slug);
-        if (empty($post)) {
+        $post = (new PostRepositoryIlluminate())->getPostBySlug($slug);
+        if ($post === null) {
             return [
                 'status' => 'fail',
-                'data' => ['post' => trans('Post saved successfully.')]
+                'data' => ['message' => trans('The post could not be found.')]
             ];
         }
+        return new Post(
+            $post['_id'],
+            new AuthorName($post['author_name']),
+            new Slug($post['slug']),
+            $post['image'],
+            $post['content'],
+            $post['views'],
+            $post['created'],
+            $post['updated']
+        );
     }
 
     public function __get($name)
@@ -90,7 +101,7 @@ class Post
         return new PostRepositoryIlluminate();
     }
 
-    public function savePost()
+    public function savePost(): array
     {
         $existing_post_slug = $this->getRepository()->checkSlugExists($this->slug);
         if ($existing_post_slug > 0) {

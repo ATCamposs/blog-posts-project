@@ -30,6 +30,7 @@ class PostTest extends TestCase
         $content = self::$content;
         $views = self::$views;
         $now = new DateTime(self::$date);
+        $now = $now->getTimestamp();
         $created = $now;
         $updated = $now;
         self::$post = new Post($uuid, $author_name, $slug, $image, $content, $views, $created, $updated);
@@ -69,6 +70,26 @@ class PostTest extends TestCase
         $this->assertSame('Error, there is already a post with this slug.', $saved['data']['slug']);
     }
 
+    public function testGetPostBySlugWithWrongSlug()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost(); //first try to get data on DB
+        $post = Post::getPostBySlug('invalid slug value');
+        $this->assertContains('fail', $post);
+        $this->assertSame('The slug is not in the correct format.', $post['data']['slug']);
+        $post = Post::getPostBySlug('wrongslugvalue');
+        $this->assertContains('fail', $post);
+        $this->assertSame('The post could not be found.', $post['data']['message']);
+    }
+
+    public function testGetPostBySlugWithRightSlug()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost(); //first try to get data on DB
+        $post = Post::getPostBySlug(self::$slug);
+        $this->assertSame('app\Domain\Post', get_class($post));
+    }
+
     public function testUpdateAuthorWithWrongAuthorName()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
@@ -103,7 +124,8 @@ class PostTest extends TestCase
         $this->assertSame($post->content, self::$content);
         $this->assertSame($post->views, self::$views);
         $date = new DateTime(self::$date);
-        $this->assertSame($post->created->format('Y-m-d'), $date->format('Y-m-d'));
+        $date = $date->getTimestamp();
+        $this->assertSame($post->created, $date);
     }
 
     protected function tearDown(): void
