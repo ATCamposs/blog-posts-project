@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace app\Domain;
 
 use app\Domain\ValueObjects\AuthorName;
+use app\Domain\ValueObjects\Slug;
 use DateTime;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 class Post extends Model
 {
     private AuthorName $author_name;
+    private Slug $slug;
     private string $content;
     private DateTime $created;
     private DateTime $updated;
