@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of webman.
  *
@@ -14,9 +15,5 @@
 
 use Webman\Route;
 
-
-Route::any('/test', function ($request) {
-    return response('test');
-});
-
-Route::any('/route-test', 'app\controller\Index@index');
+Route::any('/index', 'app\controller\Index@index');
+Route::post('/file', 'app\controller\Index@file');
