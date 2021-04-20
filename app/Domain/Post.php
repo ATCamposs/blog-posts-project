@@ -64,15 +64,9 @@ class Post
     }
 
     /** @return Array|Post */
-    public static function getPostBySlug(string $slug)
+    public static function getPostBySlugOrUUID(string $slug_or_uuid)
     {
-        try {
-            $slug = new Slug($slug);
-        } catch (InvalidSlug $error) {
-            return ['status' => 'fail', 'data' => ['slug' => $error->getMessage()]
-            ];
-        }
-        $post = (new PostRepositoryIlluminate())->getPostBySlug($slug);
+        $post = (new PostRepositoryIlluminate())->getPostBySlugOrUUID($slug_or_uuid);
         if ($post === null) {
             return [
                 'status' => 'fail',

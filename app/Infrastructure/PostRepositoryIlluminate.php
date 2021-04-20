@@ -17,9 +17,12 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         return Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->count();
     }
 
-    public function getPostBySlug(Slug $slug): ?array
+    public function getPostBySlugOrUUID(string $slug_or_uuid): ?array
     {
-        $post = Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->get();
+        $post = Db::connection('mongodb')->collection('test')
+            ->where('uuid', $slug_or_uuid)
+            ->orWhere('slug', $slug_or_uuid)
+            ->get();
         if ($post->isEmpty()) {
             return null;
         }
