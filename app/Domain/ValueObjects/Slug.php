@@ -23,7 +23,7 @@ class Slug
         if (strlen($slug) < 8) {
             throw new InvalidSlug(trans('The slug must be at least 8 characters.'));
         }
-        if (!preg_match('/([-_]*[a-zA-Z0-9]+([-_]*[a-zA-Z0-9]+)*)/m', $slug)) {
+        if (!preg_match('/^[A-z-]+$/m', $slug)) {
             throw new InvalidSlug(trans('The slug is not in the correct format.'));
         }
         $this->slug = $slug;
