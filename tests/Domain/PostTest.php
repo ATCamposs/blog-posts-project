@@ -70,23 +70,20 @@ class PostTest extends TestCase
         $this->assertSame('Error, there is already a post with this slug.', $saved['data']['slug']);
     }
 
-    public function testGetPostBySlugWithWrongSlug()
+    public function testGetPostBySlugOrUUIDWithWrongValue()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
         $post->savePost(); //first try to get data on DB
-        $post = Post::getPostBySlug('invalid slug value');
-        $this->assertContains('fail', $post);
-        $this->assertSame('The slug is not in the correct format.', $post['data']['slug']);
-        $post = Post::getPostBySlug('wrongslugvalue');
+        $post = Post::getPostBySlugOrUUID('wrongslugvalue');
         $this->assertContains('fail', $post);
         $this->assertSame('The post could not be found.', $post['data']['message']);
     }
 
-    public function testGetPostBySlugWithRightSlug()
+    public function testgetPostBySlugOrUUIDWithRightSlug()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
         $post->savePost(); //first try to get data on DB
-        $post = Post::getPostBySlug(self::$slug);
+        $post = Post::getPostBySlugOrUUID(self::$slug);
         $this->assertSame('app\Domain\Post', get_class($post));
     }
 
