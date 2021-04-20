@@ -20,10 +20,10 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
     public function getPostBySlug(Slug $slug): ?array
     {
         $post = Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->get();
-        if (empty($post)) {
+        if ($post->isEmpty()) {
             return null;
         }
-        return $post;
+        return $post->first();
     }
 
     public function savePost(Post $post): bool
@@ -35,8 +35,8 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
             'image' => $post->image,
             'content' => $post->content,
             'views' => $post->views,
-            'created' => $post->created->getTimestamp(),
-            'updated' => $post->updated->getTimestamp()
+            'created' => $post->created,
+            'updated' => $post->updated
         ]);
     }
 
