@@ -11,7 +11,7 @@ use app\Domain\ValueObjects\Slug;
 interface PostRepositoryInterface
 {
     public function checkSlugExists(Slug $slug): int;
-    public function getPostWithSlug(Slug $slug): ?array;
+    public function getPostBySlug(Slug $slug): ?array;
     public function savePost(Post $post): bool;
     public function saveAuthorNameUpdate(string $uuid, AuthorName $author_name): bool;
 }

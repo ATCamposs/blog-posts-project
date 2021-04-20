@@ -17,7 +17,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         return Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->count();
     }
 
-    public function getPostWithSlug(Slug $slug): ?array
+    public function getPostBySlug(Slug $slug): ?array
     {
         $post = Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->get();
         if (empty($post)) {
