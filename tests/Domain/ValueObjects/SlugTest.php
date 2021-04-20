@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class SlugTest extends TestCase
 {
+    public function testSlugEmpty()
+    {
+        $this->expectException(InvalidSlug::class);
+        $this->expectErrorMessage('The slug cannot be empty.');
+        new Slug('');
+    }
+
     public function testSlugMustBe3CharactersLong()
     {
         $this->expectException(InvalidSlug::class);
