@@ -1,4 +1,4 @@
-**Rota 1**
+**Rotas**
 
 **Index**
 
@@ -11,6 +11,13 @@ http://127.0.0.1:8787/posts/index?limit=NumeroPostsPorPagina&current_page=Numero
    - Pagina atual para ser mostrada
  - Se não houverem posts na pagina atual irá retornar falha.
 
+
+**view**
+
+http://127.0.0.1:8787/posts/view?post=slugOuId (rota GET)
+  - A rota recebe 1 parametro
+  - `post`
+    - o parametro pode ser o slug ou o ID do post a ser visualizado, cada visualização aumenta a contagem de views em 1.
 
 **Add**
 
@@ -36,10 +43,10 @@ http://127.0.0.1:8787/edit?post=slugOuId (rota GET)
 http://127.0.0.1:8787/posts/edit (rota POST)
 
   - A rota recebe os parametros:
-  - `_id`
+  - `uuid`
     - O id do post(é opcional) usado para selecionar o post para edição
   - `slug`
-    - Slug do post, se ele for atualizado, o `_id` se torna obrigatório para poder encontrar o post para edição
+    - Slug do post, se ele for atualizado, o `uuid` se torna obrigatório para poder encontrar o post para edição
   - `authorName`
     - Na edição ele se torna opcional, caso não altere manterá o valor já existente.
   - `image`
@@ -55,3 +62,43 @@ http://127.0.0.1:8787/posts/delete?post=slugOuId (rota DELETE)
   - `post`
     - Pode ser tanto o ID quanto o slug do post a ser deletado, caso o campo esteja vazio ou incorreto receberá uma falha na requisição.
 
+**A entidade Post(Post.php)**
+
+A entidade que cuida dos posts de um modo geral(poderia estar muito mais otimizada com mais tempo)
+
+Tem por padrão os valores:
+ - `uuid`
+   - id unico gerado automaticamente na criação de um novo post
+ - `author_name`
+   - nome do autor, já explicado acima, é um valueObject com suas proprias regras de validação
+ - `slug`
+   - slug para utilizar como link para visualização do post, também é um valueObject com as proprias regras de validação
+ - `image`
+   - campo string para utilização de um link de imagem na criação/edição do post
+ - `content`
+   - conteúdo principal do post, não tem regras de validação quanto ao tamanho ou caracteres, contanto que seja uma string
+ - `views`
+   - contagem de visualizações do post, a cada acesso a rota view é adicionada uma validação
+ - `created`
+   - data de criação do post em timestamp, é adicionada assim que o post é gerado
+ - `updated`
+   - data da ultima atualização do post também em timestamp, é atualizado a cada vez que o post é editado.
+
+
+**Como iniciar a aplicação**
+
+A primeira coisa a se fazer é criar uma cópia da aplicação no seu local de teste com o comando:
+ - git clone https://github.com/ATCamposs/blog-posts-project
+
+Logo depois, acessar a pasta do repositório e utilizar o composer para instalar as dependencias:
+ - `composer install` 
+
+Como foi utilizado mongoDB como banco de dados, você pode ter uma amostra do banco de dados sem a necessidade de instalação utilizando o https://mlab.com/plans/pricing/#plan-type=sandbox na versão gratuita.
+
+A aplicação foi construida utilizando como base o microframework webman(https://github.com/walkor/webman)(derivado do workerman(https://github.com/walkor/workerman)).
+
+Então para iniciá-lo em modo de desenvolvimento utilize o comando:
+ - `php start.php start`
+ - Para utilizar a versão de produção use o comando:
+   - php start.php start -d
+ - O servidor estará acessível no endereço `http://127.0.0.1:8787`
