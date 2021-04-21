@@ -51,7 +51,6 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
             'image' => $post->image,
             'content' => $post->content,
             'views' => $post->views,
-            'created' => $post->created,
             'updated' => $post->updated
         ], ['upsert' => true]);
         return $update > 0 ? true : false;
