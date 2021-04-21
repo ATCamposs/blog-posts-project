@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "701145953cc883b0a5d1ba91d9145f9e",
+    "content-hash": "5a196637a6f100cf4191c41ba12ffba1",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -616,6 +616,56 @@
             "time": "2020-10-27T15:20:30+00:00"
         },
         {
+            "name": "illuminate/pagination",
+            "version": "v8.38.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/pagination.git",
+                "reference": "11839988f114cb80d48b3ca088d65f19388d5a8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/pagination/zipball/11839988f114cb80d48b3ca088d65f19388d5a8d",
+                "reference": "11839988f114cb80d48b3ca088d65f19388d5a8d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/collections": "^8.0",
+                "illuminate/contracts": "^8.0",
+                "illuminate/support": "^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Pagination\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Pagination package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2021-04-13T12:54:24+00:00"
+        },
+        {
             "name": "illuminate/pipeline",
             "version": "v8.37.0",
             "source": {
@@ -730,55 +780,6 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2021-04-11T23:26:41+00:00"
-        },
-        {
-            "name": "jasongrimes/paginator",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jasongrimes/php-paginator.git",
-                "reference": "3411e3cd0c6479a0b514f26e4358f0273552f221"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jasongrimes/php-paginator/zipball/3411e3cd0c6479a0b514f26e4358f0273552f221",
-                "reference": "3411e3cd0c6479a0b514f26e4358f0273552f221",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "JasonGrimes": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jason Grimes",
-                    "email": "jason@grimesit.com"
-                }
-            ],
-            "description": "A lightweight PHP paginator, for generating pagination controls in the style of Stack Overflow and Flickr. The 'first' and 'last' page links are shown inline as page numbers, and excess page numbers are replaced by ellipses.",
-            "homepage": "http://github.com/jasongrimes/php-paginator",
-            "keywords": [
-                "pager",
-                "pagination",
-                "paginator"
-            ],
-            "support": {
-                "issues": "https://github.com/jasongrimes/php-paginator/issues",
-                "source": "https://github.com/jasongrimes/php-paginator/tree/master"
-            },
-            "time": "2018-07-11T18:11:49+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
