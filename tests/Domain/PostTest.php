@@ -122,6 +122,24 @@ class PostTest extends TestCase
         $this->assertSame('Post updated successfully.', $updated_post['data']['post']);
     }
 
+    public function testDeleteWithWrongData()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost();
+        $deleted = Post::delete('wrong slug or uuid');
+        $this->assertContains('fail', $deleted);
+        $this->assertSame('The post could not be found.', $deleted['data']['message']);
+    }
+
+    public function testDeleteWithRightData()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost();
+        $deleted = Post::delete($post->uuid);
+        $this->assertContains('success', $deleted);
+        $this->assertSame('Post deleted successfully.', $deleted['data']['message']);
+    }
+
     public function testInsertionOnPrivateProperties()
     {
         $this->expectErrorMessage('Cannot access private property app\Domain\Post::$uuid');
