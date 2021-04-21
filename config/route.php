@@ -15,5 +15,5 @@
 
 use Webman\Route;
 
-Route::any('/index', 'app\controller\Index@index');
+Route::any('/index', 'app\Presentation\PostsPresentation@index');
 Route::post('/file', 'app\controller\Index@file');

@@ -8,7 +8,7 @@ use app\Domain\Post;
 use support\Request;
 use support\Response;
 
-class Administration
+class PostsPresentation
 {
     public function index(Request $request): Response
     {
