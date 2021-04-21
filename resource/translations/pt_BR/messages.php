@@ -14,7 +14,7 @@ return [
 
     //Domain/Post.php
     'Author name updated successfully.' => 'Nome do autor atualizado com sucesso.',
-    'Error, there is already a post with this slug.' => 'Erro, já existe um post com este slug.',
+    'Error, there is already a post with this slug or unique id.' => 'Erro, já existe um post com este slug ou id único.',
     'Post saved successfully.' => 'Post salvo com sucesso.',
     'Post deleted successfully.' => 'Post deletado com sucesso.',
     'Post updated successfully.' => 'Post atualizado com sucesso.',

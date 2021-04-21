@@ -67,7 +67,7 @@ class PostTest extends TestCase
         $post->savePost(); //first try to get data on DB
         $saved = $post->savePost();
         $this->assertContains('fail', $saved);
-        $this->assertSame('Error, there is already a post with this slug.', $saved['data']['slug']);
+        $this->assertSame('Error, there is already a post with this slug or unique id.', $saved['data']['message']);
     }
 
     public function testGetPostBySlugOrUUIDWithWrongValue()

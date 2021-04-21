@@ -12,9 +12,12 @@ use support\Db;
 
 class PostRepositoryIlluminate implements PostRepositoryInterface
 {
-    public function checkSlugExists(Slug $slug): int
+    public function checkSlugOrUUIDExists(string $uuid, string $slug): int
     {
-        return Db::connection('mongodb')->collection('test')->where('slug', (string) $slug)->count();
+        return Db::connection('mongodb')->collection('test')
+            ->whereIn('_id', [$uuid, $slug])
+            ->orWhereIn('slug', [$uuid, $slug])
+            ->count();
     }
 
     public function getPostBySlugOrUUID(string $slug_or_uuid): ?array

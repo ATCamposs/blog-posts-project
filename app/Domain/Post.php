@@ -112,13 +112,14 @@ class Post
 
     public function savePost(): array
     {
-        $existing_post_slug = $this->getRepository()->checkSlugExists($this->slug);
-        if ($existing_post_slug > 0) {
+        $existing_post_slug_or_id = $this->getRepository()->checkSlugOrUUIDExists($this->uuid, (string) $this->slug);
+        if ($existing_post_slug_or_id > 0) {
             return [
                 'status' => 'fail',
-                'data' => ['slug' => trans('Error, there is already a post with this slug.')]
+                'data' => ['message' => trans('Error, there is already a post with this slug or unique id.')]
             ];
         }
+
         if ($this->getRepository()->savePost($this)) {
             return [
                 'status' => 'success',
