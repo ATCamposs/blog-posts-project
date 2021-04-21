@@ -36,6 +36,19 @@ class PostTest extends TestCase
         self::$post = new Post($uuid, $author_name, $slug, $image, $content, $views, $created, $updated);
     }
 
+    public function testReturnIndexOfPostsWithWrongLimit()
+    {
+        $all_posts = Post::indexPosts(0);
+        $this->assertContains('fail', $all_posts);
+        $this->assertSame('The number of posts per page must be greater than 0.', $all_posts['data']['limit']);
+    }
+
+    public function testReturnIndexOfPostsWithRightLimit()
+    {
+        $all_posts = Post::indexPosts(5);
+        $this->assertSame('Illuminate\Support\Collection', get_class($all_posts));
+    }
+
     public function testCreateNewPostWithErrors()
     {
         $post = Post::createNewPost('wrong name', self::$slug, self::$image, self::$content);
