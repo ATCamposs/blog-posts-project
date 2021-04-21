@@ -12,8 +12,8 @@ class PostsPresentation
 {
     public function index(Request $request): Response
     {
-        $limit = $request->get('limit');
-        $current_page = $request->get('current_page');
+        $limit = (int) $request->get('limit');
+        $current_page = (int) $request->get('current_page');
         if (empty($limit) || empty($current_page)) {
             return json(400, [
                 'status' => 'fail',
