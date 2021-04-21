@@ -157,6 +157,7 @@ class Post
                 ];
             }
         }
+        $this->updated = (new DateTime())->getTimestamp();
         if ($this->getRepository()->updatePost($this)) {
             return [
                 'status' => 'success',
