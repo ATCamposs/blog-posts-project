@@ -26,6 +26,10 @@ return [
     'You cannot leave the image and content empty at the same time.' =>
         'Você não pode deixar a imagem e o conteúdo vazios ao mesmo tempo.',
 
+    //app/PostsPresentation.php
+    'Please fill in the current page and the item limit per page.' =>
+        'Por favor preencha a pagina atual e o limite de itens por página.',
+
     //Generic Error
     'Error, please try again.' => 'Erro, por favor tente novamente.'
 ];
