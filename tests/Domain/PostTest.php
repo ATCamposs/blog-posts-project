@@ -259,6 +259,6 @@ class PostTest extends TestCase
 
     protected function tearDown(): void
     {
-        Db::connection('mongodb')->collection('test')->where('slug', self::$slug)->delete();
+        Db::connection('mongodb')->collection('post')->where('slug', self::$slug)->delete();
     }
 }

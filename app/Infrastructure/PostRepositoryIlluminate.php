@@ -16,12 +16,12 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         Paginator::currentPageResolver(function () use ($current_page) {
             return $current_page;
         });
-        return Db::connection('mongodb')->collection('test')->simplePaginate($limit);
+        return Db::connection('mongodb')->collection('post')->simplePaginate($limit);
     }
 
     public function checkSlugOrUUIDExists(string $uuid, string $slug): int
     {
-        return Db::connection('mongodb')->collection('test')
+        return Db::connection('mongodb')->collection('post')
             ->whereIn('_id', [$uuid, $slug])
             ->orWhereIn('slug', [$uuid, $slug])
             ->count();
@@ -29,7 +29,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
 
     public function getPostBySlugOrUUID(string $slug_or_uuid): ?array
     {
-        $post = Db::connection('mongodb')->collection('test')
+        $post = Db::connection('mongodb')->collection('post')
             ->where('_id', $slug_or_uuid)
             ->orWhere('slug', $slug_or_uuid)
             ->get();
@@ -41,7 +41,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
 
     public function savePost(Post $post): bool
     {
-        return Db::connection('mongodb')->collection('test')->insert([
+        return Db::connection('mongodb')->collection('post')->insert([
             '_id' => $post->uuid,
             'author_name' => (string) $post->author_name,
             'slug' => (string) $post->slug,
@@ -55,7 +55,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
 
     public function updatePost(Post $post): bool
     {
-        $update = Db::connection('mongodb')->collection('test')->where('_id', $post->uuid)->update([
+        $update = Db::connection('mongodb')->collection('post')->where('_id', $post->uuid)->update([
             'author_name' => (string) $post->author_name,
             'slug' => (string) $post->slug,
             'image' => $post->image,
@@ -68,7 +68,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
 
     public function deletePostBySlugOrUUID(string $slug_or_uuid): bool
     {
-        $deleted = Db::connection('mongodb')->collection('test')
+        $deleted = Db::connection('mongodb')->collection('post')
             ->where('_id', $slug_or_uuid)
             ->orWhere('slug', $slug_or_uuid)
             ->delete();
@@ -80,7 +80,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
 
     public function increasePostViews(string $uuid): bool
     {
-        $increase_view = Db::connection('mongodb')->collection('test')
+        $increase_view = Db::connection('mongodb')->collection('post')
             ->where('_id', $uuid)
             ->increment('views');
         return $increase_view > 0 ? true : false;
