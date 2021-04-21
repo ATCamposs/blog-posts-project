@@ -40,7 +40,7 @@ class Post
         $this->updated = $updated;
     }
 
-    public static function indexPosts(int $limit)
+    public static function indexPosts(int $limit, int $current_page): array
     {
         if ($limit === 0) {
             return [
@@ -48,7 +48,23 @@ class Post
                 'data' => ['limit' => trans('The number of posts per page must be greater than 0.')]
             ];
         }
-        return (new PostRepositoryIlluminate())->returnAllPosts();
+        if ($current_page === 0) {
+            return [
+                'status' => 'fail',
+                'data' => ['currentPage' => trans('The page number must be greater than 0.')]
+            ];
+        }
+        $paginator = (new PostRepositoryIlluminate())->returnAllPosts($limit, $current_page)->toArray();
+        return [
+            'status' => 'success',
+            'data' => [
+                'haveNextPage' => $paginator['next_page_url'] ? true : false,
+                'havePreviousPage' => $paginator['prev_page_url'] ? true : false,
+                'postsPerPage' => $paginator['per_page'],
+                'currentPage' => $paginator['current_page'],
+                'posts' => $paginator['data']
+            ]
+        ];
     }
 
     /** @return Array|Post */

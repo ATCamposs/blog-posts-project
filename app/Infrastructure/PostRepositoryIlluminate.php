@@ -6,14 +6,17 @@ namespace app\Infrastructure;
 
 use app\Domain\Post;
 use app\Domain\PostRepositoryInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
 use support\Db;
 
 class PostRepositoryIlluminate implements PostRepositoryInterface
 {
-    public function returnAllPosts(): Collection
+    public function returnAllPosts(int $limit, int $current_page): Paginator
     {
-        return Db::connection('mongodb')->collection('test')->get();
+        Paginator::currentPageResolver(function () use ($current_page) {
+            return $current_page;
+        });
+        return Db::connection('mongodb')->collection('test')->simplePaginate($limit);
     }
 
     public function checkSlugOrUUIDExists(string $uuid, string $slug): int
