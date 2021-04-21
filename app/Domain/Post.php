@@ -19,9 +19,6 @@ class Post
     private Slug $slug;
     private string $image;
     private string $content;
-    private int $views;
-    private int $created;
-    private int $updated;
 
     public function __construct(
         string $uuid,
