@@ -55,6 +55,13 @@ class Post
             ];
         }
         $paginator = (new PostRepositoryIlluminate())->returnAllPosts($limit, $current_page)->toArray();
+        if (empty($paginator['data'])) {
+            return [
+                'status' => 'fail',
+                'data' => [
+                    'currentPage' => 'There are no posts on the page indicated.'
+                ]
+        }
         return [
             'status' => 'success',
             'data' => [

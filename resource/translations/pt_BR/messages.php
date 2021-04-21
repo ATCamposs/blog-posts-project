@@ -25,6 +25,7 @@ return [
     'The post could not be found.' => 'A postagem não pode ser encontrada.',
     'You cannot leave the image and content empty at the same time.' =>
         'Você não pode deixar a imagem e o conteúdo vazios ao mesmo tempo.',
+    'There are no posts on the page indicated.' => 'Não há posts na pagina indicada.',
 
     //app/PostsPresentation.php
     'Please fill in the current page and the item limit per page.' =>
