@@ -61,6 +61,7 @@ class Post
                 'data' => [
                     'currentPage' => 'There are no posts on the page indicated.'
                 ]
+            ];
         }
         return [
             'status' => 'success',
@@ -105,9 +106,6 @@ class Post
                 'data' => ['message' => trans('The post could not be found.')]
             ];
         }
-        if ((new PostRepositoryIlluminate())->increasePostViews($post['_id'])) {
-            $post['views']++;
-        };
         $post = new Post(
             $post['_id'],
             new AuthorName($post['author_name']),
@@ -118,6 +116,16 @@ class Post
             $post['created'],
             $post['updated']
         );
+        $post = [
+            'uuid' => $post->uuid,
+            'authorName' => (string) $post->author_name,
+            'slug' => (string) $post->slug,
+            'image' => $post->image,
+            'content' => $post->content,
+            'views' => $post->views,
+            'created' => $post->created,
+            'updated' => $post->updated
+        ];
         return [
             'status' => 'success',
             'data' => ['post' => $post]

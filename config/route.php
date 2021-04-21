@@ -17,6 +17,7 @@ use Webman\Route;
 
 Route::group('/posts', function () {
     Route::get('/index', 'app\Presentation\PostsPresentation@index');
+    Route::get('/view', 'app\Presentation\PostsPresentation@view');
     Route::post('/add', 'app\Presentation\PostsPresentation@add');
     Route::get('/edit', 'app\Presentation\PostsPresentation@edit');
     Route::post('/edit', 'app\Presentation\PostsPresentation@edit');

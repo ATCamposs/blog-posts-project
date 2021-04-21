@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\Presentation;
 
 use app\Domain\Post;
+use app\Infrastructure\PostRepositoryIlluminate;
 use support\Request;
 use support\Response;
 
@@ -25,6 +26,19 @@ class PostsPresentation
             return json(201, $actual_posts_index);
         }
         return json(400, $actual_posts_index);
+    }
+
+    public function view(Request $request): Response
+    {
+        $post_id = $request->get('post');
+        $post = Post::getPostBySlugOrUUID($post_id);
+        if ($post['status'] === 'success') {
+            if ((new PostRepositoryIlluminate())->increasePostViews($post['data']['post']['uuid'])) {
+                $post['data']['post']['views']++;
+            };
+            return json(200, $post);
+        }
+        return json(400, $post);
     }
 
     public function add(Request $request): Response
