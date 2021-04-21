@@ -87,20 +87,29 @@ class PostTest extends TestCase
         $this->assertSame('app\Domain\Post', get_class($post));
     }
 
-    public function testUpdateAuthorWithWrongAuthorName()
+    public function testUpdateWithOutImageAndContent()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
         $post->savePost();
-        $update_author = $post->updateAuthor('wrong author');
-        $this->assertContains('fail', $update_author);
+        $update_properties = [
+            'image' => '',
+            'content' => ''
+        ];
+        $updated_post = $post->update($update_properties);
+        $this->assertContains('fail', $updated_post);
+        $this->assertSame('You cannot leave the image and content empty at the same time.', $updated_post['data']['post']);
     }
 
-    public function testUpdateAuthroWithRightAuthorName()
+    public function testUpdateWithRightData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
-        $update_author = $post->updateAuthor('newAuthor1');
-        $this->assertContains('success', $update_author);
-        $this->assertSame('Author name updated successfully.', $update_author['data']['authorName']);
+        $post->savePost();
+        $update_properties = [
+            'content' => 'New content is a very good to renew the breath.'
+        ];
+        $updated_post = $post->update($update_properties);
+        $this->assertContains('success', $updated_post);
+        $this->assertSame('Post updated successfully.', $updated_post['data']['post']);
     }
 
     public function testInsertionOnPrivateProperties()
