@@ -140,6 +140,15 @@ class PostTest extends TestCase
         $this->assertSame('Post deleted successfully.', $deleted['data']['message']);
     }
 
+    public function testIncreaseViewsWhenGetPost()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost();
+        $this->assertSame(0, $post->views);
+        $post = Post::getPostBySlugOrUUID($post->uuid);
+        $this->assertSame(1, $post->views);
+    }
+
     public function testInsertionOnPrivateProperties()
     {
         $this->expectErrorMessage('Cannot access private property app\Domain\Post::$uuid');

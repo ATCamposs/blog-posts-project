@@ -15,5 +15,5 @@ interface PostRepositoryInterface
     public function savePost(Post $post): bool;
     public function updatePost(Post $post): bool;
     public function deletePostBySlugOrUUID(string $slug_or_uuid): bool;
-    public function increasePostViews(string $uuid): void;
+    public function increasePostViews(string $uuid): bool;
 }

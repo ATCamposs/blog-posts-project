@@ -71,10 +71,11 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         return true;
     }
 
-    public function increasePostViews(string $uuid): void
+    public function increasePostViews(string $uuid): bool
     {
-        Db::connection('mongodb')->collection('test')
+        $increase_view = Db::connection('mongodb')->collection('test')
             ->where('_id', $uuid)
             ->increment('views');
+        return $increase_view > 0 ? true : false;
     }
 }
