@@ -29,6 +29,7 @@ return [
     //app/PostsPresentation.php
     'Please fill in the current page and the item limit per page.' =>
         'Por favor preencha a pagina atual e o limite de itens por página.',
+    'The post id cannot be empty.' => 'O id do post não pode estar vazio.',
 
     //Generic Error
     'Error, please try again.' => 'Erro, por favor tente novamente.'
