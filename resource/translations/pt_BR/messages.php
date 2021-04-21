@@ -13,6 +13,7 @@ return [
     'The slug is not in the correct format.' => 'O slug está no formato incorreto.',
 
     //Domain/Post.php
+    'The number of posts per page must be greater than 0.' => 'A quantidade de posts por página precisa ser maior que 0.',
     'Author name updated successfully.' => 'Nome do autor atualizado com sucesso.',
     'Error, there is already a post with this slug or unique id.' => 'Erro, já existe um post com este slug ou id único.',
     'Post saved successfully.' => 'Post salvo com sucesso.',

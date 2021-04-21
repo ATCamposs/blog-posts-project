@@ -40,6 +40,17 @@ class Post
         $this->updated = $updated;
     }
 
+    public static function indexPosts(int $limit)
+    {
+        if ($limit === 0) {
+            return [
+                'status' => 'fail',
+                'data' => ['limit' => trans('The number of posts per page must be greater than 0.')]
+            ];
+        }
+        return (new PostRepositoryIlluminate())->returnAllPosts();
+    }
+
     /** @return Array|Post */
     public static function createNewPost(string $author_name, string $slug, string $image, string $content)
     {
