@@ -85,6 +85,21 @@ class Post
         );
     }
 
+    public static function delete(string $slug_or_uuid)
+    {
+        $deleted = (new PostRepositoryIlluminate())->deletePostBySlugOrUUID($slug_or_uuid);
+        if (!$deleted) {
+            return [
+                'status' => 'fail',
+                'data' => ['message' => trans('The post could not be found.')]
+            ];
+        }
+        return [
+            'status' => 'success',
+            'data' => ['message' => trans('Post deleted successfully.')]
+        ];
+    }
+
     public function __get($name)
     {
         return $this->$name;
@@ -188,21 +203,6 @@ class Post
         return [
             'status' => 'fail',
             'data' => ['message' => trans('Error, please try again.')]
-        ];
-    }
-
-    public function delete(string $slug_or_uuid)
-    {
-        $deleted = (new PostRepositoryIlluminate())->deletePostBySlugOrUUID($slug_or_uuid);
-        if (!$deleted) {
-            return [
-                'status' => 'fail',
-                'data' => ['message' => trans('The post could not be found.')]
-            ];
-        }
-        return [
-            'status' => 'success',
-            'data' => ['message' => trans('Post deleted successfully.')]
         ];
     }
 }
