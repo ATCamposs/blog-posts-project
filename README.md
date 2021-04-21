@@ -97,8 +97,39 @@ Como foi utilizado mongoDB como banco de dados, você pode ter uma amostra do ba
 
 A aplicação foi construida utilizando como base o microframework webman(https://github.com/walkor/webman)(derivado do workerman(https://github.com/walkor/workerman)).
 
-Então para iniciá-lo em modo de desenvolvimento utilize o comando:
+Os requisitos necessários são:
+ - Sistema operacional linux
+ - PHP-CLI(>=5.3.3) recomendo fortemente 7.4 ou mais recente
+   - extensões `pcntl` e `posix`
+ - libevent é recomendado mas não é obrigatório
+
+Confirmados os requisitos basicos, devemos configurar o .env da aplicação.
+ - Copie o arquivo .env.example para um arquivo chamado .env
+ - Para utilizar o sistema só é necessário trocar 2 chaves para completo funcionamento
+ - `MONGO_DSN=`
+   - DSN que a mlab(https://mlab.com/plans/pricing/#plan-type=sandbox) disponibiliza gratuitamente para acesso remoto(com limitações)
+ - `MONGO_DATABASE=`
+   - Nome do banco de dados criado ao criar sua conta no mlab.
+
+
+Feito isso, podemos iniciar o sistema. Então para iniciá-lo em modo de desenvolvimento utilize o comando:
  - `php start.php start`
  - Para utilizar a versão de produção use o comando:
    - php start.php start -d
  - O servidor estará acessível no endereço `http://127.0.0.1:8787`
+
+**Porque utilizar o webman(workerman)**
+ - Diferente do swoole que necessita de uma instalação a parte para funcionar, o webman só necessita de algumas extensões do PHP de fácil instalação e está apto para rodar em praticamente qualquer maquina.
+ - O webman já vem com alguns componentes por padrão tais como o `Eloquent/illuminate` do laravel, tornando simples e prática sua utilização, dando suporte para muitos tipos de bancos de dados e criando model's simples e práticas, já vem com exemplos de middlewares e rotas, além de contar com o blade para quem gosta de um framework FullStack.
+ - O real motivo para minha utilização do webman é sua velocidade e escalabilidade, geralmente se mantendo no TOP 10 de frameworks mais rápidos no momento, batendo linguagens compiladas como Go (https://github.com/the-benchmarker/web-frameworks)
+
+**Padrões de projeto utilizados**
+ - Primeiramente, a parte mais importante no desenvolvimento de software a longo prazo tem mostrado ser o uso do `TDD`.
+   - Desenvolver sem testes torna o sistema perigoso e pouco escalável, especialmente em códigos mal escritos que precisam de refatoração em seu nucleo constantemente.
+ - O DDD aplicado neste projeto torna o `Post` como entidade "nucleo" do domínio, fazendo com que ele se expanda de dentro pra fora.
+   - Um dos motivos do projeto não estender a Model do eloquent para criação da entidade é o maior controle sobre todo o código e uma melhor demonstração de como ela funciona "debaixo do capô", além de que em um sistema escalável, objetos grandes como os que estendem de ORM's geralmente são pesados demais, consumindo mais memória do que realmente necessitariam. Além de tornar as buscas mais lentas(https://www.youtube.com/watch?v=3TJfR1Ta4GU)
+   - Não condeno seu uso, na verdade acho que para a maioria dos projetos ele se destaca pela redução de mão de obra e reescrita de código.
+ - **Separando os objetos**
+   - A parte principal de qualquer sistema é a persistencia no banco de dados, que aqui é feita pela camada repository, nenhuma outra camada faz acessos ao banco além dela, garantindo controle de acesso e possibilidade de administração mesmo com grande expansão do código.
+   - Utilizar o padrão builder para gerar os novos posts e já verificar suas regras de negócio devido a ligação com os valueObjets torna o código mais limpo e de fácil entendimento.
+   - Utilizar a Abstract Factory para geração de
