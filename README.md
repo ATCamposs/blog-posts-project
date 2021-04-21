@@ -63,6 +63,7 @@ http://127.0.0.1:8787/posts/delete?post=slugOuId (rota DELETE)
     - Pode ser tanto o ID quanto o slug do post a ser deletado, caso o campo esteja vazio ou incorreto receberá uma falha na requisição.
 
 **A entidade Post(Post.php)**
+
 A entidade que cuida dos posts de um modo geral(poderia estar muito mais otimizada com mais tempo)
 
 Tem por padrão os valores:
@@ -84,3 +85,20 @@ Tem por padrão os valores:
    - data da ultima atualização do post também em timestamp, é atualizado a cada vez que o post é editado.
 
 
+**Como iniciar a aplicação**
+
+A primeira coisa a se fazer é criar uma cópia da aplicação no seu local de teste com o comando:
+ - git clone https://github.com/ATCamposs/blog-posts-project
+
+Logo depois, acessar a pasta do repositório e utilizar o composer para instalar as dependencias:
+ - `composer install` 
+
+Como foi utilizado mongoDB como banco de dados, você pode ter uma amostra do banco de dados sem a necessidade de instalação utilizando o https://mlab.com/plans/pricing/#plan-type=sandbox na versão gratuita.
+
+A aplicação foi construida utilizando como base o microframework webman(https://github.com/walkor/webman)(derivado do workerman(https://github.com/walkor/workerman)).
+
+Então para iniciá-lo em modo de desenvolvimento utilize o comando:
+ - `php start.php start`
+ - Para utilizar a versão de produção use o comando:
+   - php start.php start -d
+ - O servidor estará acessível no endereço `http://127.0.0.1:8787`
