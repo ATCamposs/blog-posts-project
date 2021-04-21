@@ -16,6 +16,7 @@ return [
     'Author name updated successfully.' => 'Nome do autor atualizado com sucesso.',
     'Error, there is already a post with this slug.' => 'Erro, já existe um post com este slug.',
     'Post saved successfully.' => 'Post salvo com sucesso.',
+    'Post deleted successfully.' => 'Post deletado com sucesso.',
     'Post updated successfully.' => 'Post atualizado com sucesso.',
     'You need to modify at least 1 field to be able to update the post.' =>
         'Você precisa modificar ao menos 1 campo para poder atualizar o post.',

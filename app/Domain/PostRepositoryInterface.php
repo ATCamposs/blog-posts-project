@@ -14,4 +14,5 @@ interface PostRepositoryInterface
     public function getPostBySlugOrUUID(string $slug_or_uuid): ?array;
     public function savePost(Post $post): bool;
     public function updatePost(Post $post): bool;
+    public function deletePostBySlugOrUUID(string $slug_or_uuid): bool;
 }

@@ -55,4 +55,16 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         ], ['upsert' => true]);
         return $update > 0 ? true : false;
     }
+
+    public function deletePostBySlugOrUUID(string $slug_or_uuid): bool
+    {
+        $deleted = Db::connection('mongodb')->collection('test')
+            ->where('uuid', $slug_or_uuid)
+            ->orWhere('slug', $slug_or_uuid)
+            ->delete();
+        if ($deleted === 0) {
+            return false;
+        }
+        return true;
+    }
 }
