@@ -26,4 +26,28 @@ class PostsPresentation
         }
         return json(400, $actual_posts_index);
     }
+
+    public function add(Request $request): Response
+    {
+        $author_name = (string) $request->input('authorName');
+        $slug = (string) $request->input('slug');
+        $image = (string) $request->input('image');
+        $content = (string) $request->input('content');
+        if (empty(trim($image)) && empty(trim($content))) {
+            return json(400, [
+                'status' => 'fail',
+                'data' => ['message' => trans('You cannot leave the image and content empty at the same time.')]
+            ]);
+        };
+        $new_post = Post::createNewPost($author_name, $slug, $image, $content);
+        if ($new_post['status'] !== 'success') {
+            return json(400, $new_post);
+        }
+        $new_post = $new_post['data']['post'];
+        $saved_post = $new_post->savePost();
+        if ($saved_post['status'] === 'success') {
+            return json(201, $saved_post);
+        }
+        return json(400, $saved_post);
+    }
 }
