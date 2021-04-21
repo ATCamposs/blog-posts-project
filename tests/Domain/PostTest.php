@@ -38,15 +38,44 @@ class PostTest extends TestCase
 
     public function testReturnIndexOfPostsWithWrongLimit()
     {
-        $all_posts = Post::indexPosts(0);
+        $all_posts = Post::indexPosts(0, 3);
         $this->assertContains('fail', $all_posts);
         $this->assertSame('The number of posts per page must be greater than 0.', $all_posts['data']['limit']);
     }
 
+    public function testReturnIndexOfPostsWithWrongCurrentPage()
+    {
+        $all_posts = Post::indexPosts(3, 0);
+        $this->assertContains('fail', $all_posts);
+        $this->assertSame('The page number must be greater than 0.', $all_posts['data']['currentPage']);
+    }
+
     public function testReturnIndexOfPostsWithRightLimit()
     {
-        $all_posts = Post::indexPosts(5);
-        $this->assertSame('Illuminate\Support\Collection', get_class($all_posts));
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post = $post['data']['post'];
+        $post->savePost();
+        $all_posts = Post::indexPosts(5, 1);
+        $this->assertContains('success', $all_posts);
+        $this->assertSame(false, $all_posts['data']['haveNextPage']);
+        $this->assertSame(false, $all_posts['data']['havePreviousPage']);
+        $this->assertSame(5, $all_posts['data']['postsPerPage']);
+        $this->assertSame(1, $all_posts['data']['currentPage']);
+        $this->assertSame(1, count($all_posts['data']['posts']));
+    }
+
+    public function testReturnIndexOfPostsWithWrongPage()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post = $post['data']['post'];
+        $post->savePost();
+        $all_posts = Post::indexPosts(5, 2);
+        $this->assertContains('success', $all_posts);
+        $this->assertSame(false, $all_posts['data']['haveNextPage']);
+        $this->assertSame(true, $all_posts['data']['havePreviousPage']);
+        $this->assertSame(5, $all_posts['data']['postsPerPage']);
+        $this->assertSame(2, $all_posts['data']['currentPage']);
+        $this->assertSame(0, count($all_posts['data']['posts']));
     }
 
     public function testCreateNewPostWithErrors()
