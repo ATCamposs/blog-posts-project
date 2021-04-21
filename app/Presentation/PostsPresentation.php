@@ -98,4 +98,23 @@ class PostsPresentation
             return json(400, $updated_post);
         }
     }
+
+    public function delete(Request $request): Response
+    {
+        $post_id = $request->input('post');
+        if (empty(trim($post_id))) {
+            return json(
+                400,
+                [
+                    'status' => 'fail',
+                    'data' => ['message' => 'The post id cannot be empty.']
+                ]
+            );
+        }
+        $deleted_post = Post::delete($post_id);
+        if ($deleted_post['status'] === 'success') {
+            return json(201, $deleted_post);
+        }
+        return json(400, $deleted_post);
+    }
 }

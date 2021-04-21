@@ -19,5 +19,5 @@ Route::get('/index', 'app\Presentation\PostsPresentation@index');
 Route::post('/add', 'app\Presentation\PostsPresentation@add');
 Route::get('/edit', 'app\Presentation\PostsPresentation@edit');
 Route::post('/edit', 'app\Presentation\PostsPresentation@edit');
-
+Route::delete('/delete', 'app\Presentation\PostsPresentation@delete');
 Route::post('/file', 'app\controller\Index@file');
