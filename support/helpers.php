@@ -80,9 +80,9 @@ function response($body = '', $status = 200, $headers = array())
  * @param int $options
  * @return Response
  */
-function json($data, $options = JSON_UNESCAPED_UNICODE)
+function json($status, $data, $options = JSON_UNESCAPED_UNICODE)
 {
-    return new Response(200, ['Content-Type' => 'application/json'], json_encode($data, $options));
+    return new Response($status, ['Content-Type' => 'application/json'], json_encode($data, $options));
 }
 
 /**
