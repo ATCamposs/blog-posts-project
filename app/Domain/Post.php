@@ -76,7 +76,7 @@ class Post
         if ((new PostRepositoryIlluminate())->increasePostViews($post['_id'])) {
             $post['views']++;
         };
-        return new Post(
+        $post = new Post(
             $post['_id'],
             new AuthorName($post['author_name']),
             new Slug($post['slug']),
@@ -86,6 +86,10 @@ class Post
             $post['created'],
             $post['updated']
         );
+        return [
+            'status' => 'success',
+            'data' => ['post' => $post]
+        ];
     }
 
     public static function delete(string $slug_or_uuid)

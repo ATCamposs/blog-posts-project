@@ -51,6 +51,13 @@ class PostTest extends TestCase
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
         $this->assertSame('app\Domain\Post', get_class($post));
+        $this->assertSame(true, is_string($post->uuid));
+        $this->assertSame(self::$author_name, (string) $post->author_name);
+        $this->assertSame(self::$slug, (string) $post->slug);
+        $this->assertSame(self::$image, (string) $post->image);
+        $this->assertSame(self::$content, (string) $post->content);
+        $this->assertSame(true, is_int($post->created));
+        $this->assertSame(true, is_int($post->updated));
     }
 
     public function testSaveANewPostOnDB()
@@ -77,6 +84,9 @@ class PostTest extends TestCase
         $post = Post::getPostBySlugOrUUID('wrongslugvalue');
         $this->assertContains('fail', $post);
         $this->assertSame('The post could not be found.', $post['data']['message']);
+        $post = Post::getPostBySlugOrUUID('dc49b050-dont-have-atrue-valueb29b6b8');
+        $this->assertContains('fail', $post);
+        $this->assertSame('The post could not be found.', $post['data']['message']);
     }
 
     public function testgetPostBySlugOrUUIDWithRightSlug()
@@ -84,7 +94,17 @@ class PostTest extends TestCase
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
         $post->savePost(); //first try to get data on DB
         $post = Post::getPostBySlugOrUUID(self::$slug);
-        $this->assertSame('app\Domain\Post', get_class($post));
+        $this->assertContains('success', $post);
+        $this->assertSame('app\Domain\Post', get_class($post['data']['post']));
+    }
+
+    public function testgetPostBySlugOrUUIDWithRightUUID()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost(); //first try to get data on DB
+        $post = Post::getPostBySlugOrUUID($post->uuid);
+        $this->assertContains('success', $post);
+        $this->assertSame('app\Domain\Post', get_class($post['data']['post']));
     }
 
     public function testUpdateWithOutImageAndContent()
@@ -146,7 +166,7 @@ class PostTest extends TestCase
         $post->savePost();
         $this->assertSame(0, $post->views);
         $post = Post::getPostBySlugOrUUID($post->uuid);
-        $this->assertSame(1, $post->views);
+        $this->assertSame(1, $post['data']['post']->views);
     }
 
     public function testInsertionOnPrivateProperties()
