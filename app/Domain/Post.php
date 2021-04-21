@@ -118,6 +118,7 @@ class Post
 
     public function update($update_properties)
     {
+        $updated = false;
         if (
             isset($update_properties['image']) &&
             empty(trim($update_properties['image'])) &&
@@ -131,15 +132,25 @@ class Post
         }
 
         if (isset($update_properties['image'])) {
-            $this->image = $update_properties['image'];
+            if ($this->image != $update_properties['image']) {
+                $this->image = $update_properties['image'];
+                $updated = true;
+            }
         }
         if (isset($update_properties['content'])) {
-            $this->image = $update_properties['content'];
+            if ($this->content != $update_properties['content']) {
+                $this->content = $update_properties['content'];
+                $updated = true;
+            }
         }
 
         if (isset($update_properties['authorName'])) {
             try {
-                $this->author_name = new AuthorName($update_properties['authorName']);
+                $author_name = new AuthorName($update_properties['authorName']);
+                if ($this->author_name != $author_name) {
+                    $this->author_name = $author_name;
+                    $updated = true;
+                }
             } catch (InvalidAuthorName $error) {
                 return [
                     'status' => 'fail',
@@ -149,13 +160,23 @@ class Post
         }
         if (isset($update_properties['slug'])) {
             try {
-                $this->slug = new AuthorName($update_properties['slug']);
+                $slug = new AuthorName($update_properties['slug']);
+                if ($this->slug != $slug) {
+                    $this->slug = $slug;
+                    $updated = true;
+                }
             } catch (InvalidSlug $error) {
                 return [
                     'status' => 'fail',
                     'data' => ['slug' => $error->getMessage()]
                 ];
             }
+        }
+        if (!$updated) {
+            return [
+                'status' => 'fail',
+                'data' => ['post' => trans('You need to modify at least 1 field to be able to update the post.')]
+            ];
         }
         $this->updated = (new DateTime())->getTimestamp();
         if ($this->getRepository()->updatePost($this)) {

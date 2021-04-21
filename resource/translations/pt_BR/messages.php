@@ -17,6 +17,8 @@ return [
     'Error, there is already a post with this slug.' => 'Erro, já existe um post com este slug.',
     'Post saved successfully.' => 'Post salvo com sucesso.',
     'Post updated successfully.' => 'Post atualizado com sucesso.',
+    'You need to modify at least 1 field to be able to update the post.' =>
+        'Você precisa modificar ao menos 1 campo para poder atualizar o post.',
     'The post could not be found.' => 'A postagem não pode ser encontrada.',
     'You cannot leave the image and content empty at the same time.' =>
         'Você não pode deixar a imagem e o conteúdo vazios ao mesmo tempo.',

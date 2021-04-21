@@ -100,6 +100,16 @@ class PostTest extends TestCase
         $this->assertSame('You cannot leave the image and content empty at the same time.', $updated_post['data']['post']);
     }
 
+    public function testUpdateWithOutData()
+    {
+        $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $post->savePost();
+        $update_properties = [];
+        $updated_post = $post->update($update_properties);
+        $this->assertContains('fail', $updated_post);
+        $this->assertSame('You need to modify at least 1 field to be able to update the post.', $updated_post['data']['post']);
+    }
+
     public function testUpdateWithRightData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
