@@ -50,6 +50,8 @@ class PostTest extends TestCase
     public function testCreateANewPostWithRightData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $this->assertSame('app\Domain\Post', get_class($post));
         $this->assertSame(true, is_string($post->uuid));
         $this->assertSame(self::$author_name, (string) $post->author_name);
@@ -63,6 +65,8 @@ class PostTest extends TestCase
     public function testSaveANewPostOnDB()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $saved = $post->savePost();
         $this->assertContains('success', $saved);
         $this->assertSame('Post saved successfully.', $saved['data']['post']);
@@ -71,6 +75,8 @@ class PostTest extends TestCase
     public function testSaveSamePostAgain()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost(); //first try to get data on DB
         $saved = $post->savePost();
         $this->assertContains('fail', $saved);
@@ -80,6 +86,8 @@ class PostTest extends TestCase
     public function testGetPostBySlugOrUUIDWithWrongValue()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost(); //first try to get data on DB
         $post = Post::getPostBySlugOrUUID('wrongslugvalue');
         $this->assertContains('fail', $post);
@@ -92,6 +100,8 @@ class PostTest extends TestCase
     public function testgetPostBySlugOrUUIDWithRightSlug()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost(); //first try to get data on DB
         $post = Post::getPostBySlugOrUUID(self::$slug);
         $this->assertContains('success', $post);
@@ -101,6 +111,8 @@ class PostTest extends TestCase
     public function testgetPostBySlugOrUUIDWithRightUUID()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost(); //first try to get data on DB
         $post = Post::getPostBySlugOrUUID($post->uuid);
         $this->assertContains('success', $post);
@@ -110,6 +122,8 @@ class PostTest extends TestCase
     public function testUpdateWithOutImageAndContent()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $update_properties = [
             'image' => '',
@@ -123,6 +137,8 @@ class PostTest extends TestCase
     public function testUpdateWithOutData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $update_properties = [];
         $updated_post = $post->update($update_properties);
@@ -133,6 +149,8 @@ class PostTest extends TestCase
     public function testUpdateWithRightData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $update_properties = [
             'content' => 'New content is a very good to renew the breath.'
@@ -145,6 +163,8 @@ class PostTest extends TestCase
     public function testDeleteWithWrongData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $deleted = Post::delete('wrong slug or uuid');
         $this->assertContains('fail', $deleted);
@@ -154,6 +174,8 @@ class PostTest extends TestCase
     public function testDeleteWithRightData()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $deleted = Post::delete($post->uuid);
         $this->assertContains('success', $deleted);
@@ -163,6 +185,8 @@ class PostTest extends TestCase
     public function testIncreaseViewsWhenGetPost()
     {
         $post = Post::createNewPost(self::$author_name, self::$slug, self::$image, self::$content);
+        $this->assertContains('success', $post);
+        $post = $post['data']['post'];
         $post->savePost();
         $this->assertSame(0, $post->views);
         $post = Post::getPostBySlugOrUUID($post->uuid);

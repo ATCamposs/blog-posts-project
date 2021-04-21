@@ -57,7 +57,8 @@ class Post
         $now = new DateTime();
         $now = $now->getTimestamp();
 
-        return new Post($uuid, $author_name, $slug, $image, $content, 0, $now, $now);
+        $post = new Post($uuid, $author_name, $slug, $image, $content, 0, $now, $now);
+        return ['status' => 'success', 'data' => ['post' => $post]];
     }
 
     /** @return Array|Post */
