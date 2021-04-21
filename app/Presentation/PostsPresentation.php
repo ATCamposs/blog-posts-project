@@ -50,4 +50,52 @@ class PostsPresentation
         }
         return json(400, $saved_post);
     }
+
+    public function edit(Request $request): Response
+    {
+        $method = $request->method();
+
+        if ($method === "GET") {
+            $post_id = $request->get('post');
+            $post = Post::getPostBySlugOrUUID($post_id);
+            if ($post['status'] === 'success') {
+                return json(200, $post);
+            }
+            return json(400, $post);
+        }
+
+        if ($method === "POST") {
+            $post_id = $request->input('_id');
+            $post_id = $post_id ?? $request->input('slug');
+            $post = Post::getPostBySlugOrUUID($post_id);
+            if ($post['status'] !== 'success') {
+                return json(400, $post);
+            }
+            $post = $post['data']['post'];
+            $updatable_attributes = ['authorName', 'slug', 'image', 'content'];
+            $update_properties = [];
+            foreach ($updatable_attributes as $attribute) {
+                    $update_properties[$attribute] = $request->input($attribute);
+            }
+            if (
+                isset($update_properties['image']) &&
+                empty(trim($update_properties['image'])) &&
+                isset($update_properties['content']) &&
+                empty(trim($update_properties['content']))
+            ) {
+                return json(
+                    400,
+                    [
+                        'status' => 'fail',
+                        'data' => ['post' => trans('You cannot leave the image and content empty at the same time.')]
+                    ]
+                );
+            }
+            $updated_post = $post->update($update_properties);
+            if ($updated_post['status'] === 'success') {
+                return json(201, $updated_post);
+            }
+            return json(400, $updated_post);
+        }
+    }
 }
