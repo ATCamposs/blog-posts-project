@@ -208,7 +208,7 @@ class Post
         }
         if (isset($update_properties['slug'])) {
             try {
-                $slug = new AuthorName($update_properties['slug']);
+                $slug = new Slug($update_properties['slug']);
                 if ($this->slug != $slug) {
                     $this->slug = $slug;
                     $updated = true;
