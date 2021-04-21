@@ -73,6 +73,7 @@ class Post
                 'data' => ['message' => trans('The post could not be found.')]
             ];
         }
+        (new PostRepositoryIlluminate())->increasePostViews($post['_id']);
         return new Post(
             $post['_id'],
             new AuthorName($post['author_name']),
