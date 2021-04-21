@@ -20,7 +20,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
     public function getPostBySlugOrUUID(string $slug_or_uuid): ?array
     {
         $post = Db::connection('mongodb')->collection('test')
-            ->where('uuid', $slug_or_uuid)
+            ->where('_id', $slug_or_uuid)
             ->orWhere('slug', $slug_or_uuid)
             ->get();
         if ($post->isEmpty()) {
@@ -59,7 +59,7 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
     public function deletePostBySlugOrUUID(string $slug_or_uuid): bool
     {
         $deleted = Db::connection('mongodb')->collection('test')
-            ->where('uuid', $slug_or_uuid)
+            ->where('_id', $slug_or_uuid)
             ->orWhere('slug', $slug_or_uuid)
             ->delete();
         if ($deleted === 0) {
