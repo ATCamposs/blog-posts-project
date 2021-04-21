@@ -2,7 +2,7 @@
 
 **Index**
 
-http://127.0.0.1:8787/posts/index?limit=NumeroPostsPorPagina&current_page=NumeroPagina
+http://127.0.0.1:8787/posts/index?limit=NumeroPostsPorPagina&current_page=NumeroPagina (rota GET)
 
  - A rota index recebe 2 parametros
  - `limit`
@@ -14,7 +14,7 @@ http://127.0.0.1:8787/posts/index?limit=NumeroPostsPorPagina&current_page=Numero
 
 **Add**
 
-http://127.0.0.1:8787/posts/add
+http://127.0.0.1:8787/posts/add (rota POST)
 
  - A rota recebe os parametros:
  - `authorName`
@@ -49,4 +49,9 @@ http://127.0.0.1:8787/posts/edit (rota POST)
 
 **Delete**
 
-http://127.0.0.1:8787/posts/delete?post=slugOrId
+http://127.0.0.1:8787/posts/delete?post=slugOuId (rota DELETE)
+
+  - A rota recebe o parametro:
+  - `post`
+    - Pode ser tanto o ID quanto o slug do post a ser deletado, caso o campo esteja vazio ou incorreto receberá uma falha na requisição.
+
