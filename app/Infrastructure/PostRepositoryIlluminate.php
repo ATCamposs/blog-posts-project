@@ -6,12 +6,16 @@ namespace app\Infrastructure;
 
 use app\Domain\Post;
 use app\Domain\PostRepositoryInterface;
-use app\Domain\ValueObjects\AuthorName;
-use app\Domain\ValueObjects\Slug;
+use Illuminate\Support\Collection;
 use support\Db;
 
 class PostRepositoryIlluminate implements PostRepositoryInterface
 {
+    public function returnAllPosts(): Collection
+    {
+        return Db::connection('mongodb')->collection('test')->get();
+    }
+
     public function checkSlugOrUUIDExists(string $uuid, string $slug): int
     {
         return Db::connection('mongodb')->collection('test')
