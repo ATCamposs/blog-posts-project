@@ -126,10 +126,12 @@ Feito isso, podemos iniciar o sistema. Então para iniciá-lo em modo de desenvo
 **Padrões de projeto utilizados**
  - Primeiramente, a parte mais importante no desenvolvimento de software a longo prazo tem mostrado ser o uso do `TDD`.
    - Desenvolver sem testes torna o sistema perigoso e pouco escalável, especialmente em códigos mal escritos que precisam de refatoração em seu nucleo constantemente.
- - O DDD aplicado neste projeto torna o `Post` como entidade "nucleo" do domínio, fazendo com que ele se expanda de dentro pra fora.
+ - O `DDD` aplicado neste projeto torna o `Post` como entidade "nucleo" do domínio, fazendo com que ele se expanda de dentro pra fora.
    - Um dos motivos do projeto não estender a Model do eloquent para criação da entidade é o maior controle sobre todo o código e uma melhor demonstração de como ela funciona "debaixo do capô", além de que em um sistema escalável, objetos grandes como os que estendem de ORM's geralmente são pesados demais, consumindo mais memória do que realmente necessitariam. Além de tornar as buscas mais lentas(https://www.youtube.com/watch?v=3TJfR1Ta4GU)
    - Não condeno seu uso, na verdade acho que para a maioria dos projetos ele se destaca pela redução de mão de obra e reescrita de código.
  - **Separando os objetos**
-   - A parte principal de qualquer sistema é a persistencia no banco de dados, que aqui é feita pela camada repository, nenhuma outra camada faz acessos ao banco além dela, garantindo controle de acesso e possibilidade de administração mesmo com grande expansão do código.
-   - Utilizar o padrão builder para gerar os novos posts e já verificar suas regras de negócio devido a ligação com os valueObjets torna o código mais limpo e de fácil entendimento.
-   - Utilizar a Abstract Factory para geração de
+   - A parte principal de qualquer sistema é a persistencia no banco de dados, que aqui é feita pela camada `repository`, nenhuma outra camada faz acessos ao banco além dela, garantindo controle de acesso e possibilidade de administração mesmo com grande expansão do código.
+   - Utilizar o padrão `builder` para gerar os novos posts e já verificar suas regras de negócio devido a ligação com os valueObjets torna o código mais limpo e de fácil entendimento.
+   - Utilizar a `abstract factory` para geração de repositórios faz com que se possa utilizar qualquer banco de dados, já que ao implementar uma classe abstrata presente no domínio torna suas implementações "obrigatórias" não se fazendo necessárias modificações na entidade cada vez que trocamos de bancos de dados.
+
+Muitas partes do projeto ainda estão incompletas e podem ser melhoradas, sinta-se livre para qualquer contribuição ;)
