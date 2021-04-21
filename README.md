@@ -111,6 +111,8 @@ Confirmados os requisitos basicos, devemos configurar o .env da aplicação.
  - `MONGO_DATABASE=`
    - Nome do banco de dados criado ao criar sua conta no mlab.
 
+Depois de tudo configurado, podemos conferir os testes no sistema
+ - Utilizando o comando `vendor/bin/phpunit` rodamos todos os testes necessários para ver que está tudo em ordem.
 
 Feito isso, podemos iniciar o sistema. Então para iniciá-lo em modo de desenvolvimento utilize o comando:
  - `php start.php start`
