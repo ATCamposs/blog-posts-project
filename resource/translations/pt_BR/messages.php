@@ -16,7 +16,10 @@ return [
     'Author name updated successfully.' => 'Nome do autor atualizado com sucesso.',
     'Error, there is already a post with this slug.' => 'Erro, já existe um post com este slug.',
     'Post saved successfully.' => 'Post salvo com sucesso.',
+    'Post updated successfully.' => 'Post atualizado com sucesso.',
     'The post could not be found.' => 'A postagem não pode ser encontrada.',
+    'You cannot leave the image and content empty at the same time.' =>
+        'Você não pode deixar a imagem e o conteúdo vazios ao mesmo tempo.',
 
     //Generic Error
     'Error, please try again.' => 'Erro, por favor tente novamente.'

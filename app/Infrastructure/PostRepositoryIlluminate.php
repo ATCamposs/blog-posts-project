@@ -43,10 +43,16 @@ class PostRepositoryIlluminate implements PostRepositoryInterface
         ]);
     }
 
-    public function saveAuthorNameUpdate(string $uuid, AuthorName $author_name): bool
+    public function updatePost(Post $post): bool
     {
-        $update = Db::connection('mongodb')->collection('test')->where('_id', $uuid)->update([
-            'author_name' => (string) $author_name
+        $update = Db::connection('mongodb')->collection('test')->where('_id', $post->uuid)->update([
+            'author_name' => (string) $post->author_name,
+            'slug' => (string) $post->slug,
+            'image' => $post->image,
+            'content' => $post->content,
+            'views' => $post->views,
+            'created' => $post->created,
+            'updated' => $post->updated
         ], ['upsert' => true]);
         return $update > 0 ? true : false;
     }

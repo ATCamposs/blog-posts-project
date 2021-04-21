@@ -116,20 +116,51 @@ class Post
         ];
     }
 
-    public function updateAuthor(string $author_name)
+    public function update($update_properties)
     {
-        try {
-            $author_name = new AuthorName($author_name);
-        } catch (InvalidAuthorName $error) {
+        if (
+            isset($update_properties['image']) &&
+            empty(trim($update_properties['image'])) &&
+            isset($update_properties['content']) &&
+            empty(trim($update_properties['content']))
+        ) {
             return [
                 'status' => 'fail',
-                'data' => ['authorName' => $error->getMessage()]
+                'data' => ['post' => trans('You cannot leave the image and content empty at the same time.')]
             ];
         }
-        if ($this->getRepository()->saveAuthorNameUpdate($this->uuid, $author_name)) {
+
+        if (isset($update_properties['image'])) {
+            $this->image = $update_properties['image'];
+        }
+        if (isset($update_properties['content'])) {
+            $this->image = $update_properties['content'];
+        }
+
+        if (isset($update_properties['authorName'])) {
+            try {
+                $this->author_name = new AuthorName($update_properties['authorName']);
+            } catch (InvalidAuthorName $error) {
+                return [
+                    'status' => 'fail',
+                    'data' => ['authorName' => $error->getMessage()]
+                ];
+            }
+        }
+        if (isset($update_properties['slug'])) {
+            try {
+                $this->slug = new AuthorName($update_properties['slug']);
+            } catch (InvalidSlug $error) {
+                return [
+                    'status' => 'fail',
+                    'data' => ['slug' => $error->getMessage()]
+                ];
+            }
+        }
+        if ($this->getRepository()->updatePost($this)) {
             return [
                 'status' => 'success',
-                'data' => ['authorName' => trans('Author name updated successfully.')]
+                'data' => ['post' => trans('Post updated successfully.')]
             ];
         }
         return [
